@@ -5,6 +5,7 @@ import com.example.simplecurdapp.exception.ResourceNotFoundException;
 import com.example.simplecurdapp.model.User;
 import com.example.simplecurdapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,37 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+
+    public User getUserData(Long id)
+    {
+
+        //User_10
+
+        User user=(User) redisTemplate.opsForValue().get("User_"+id);
+
+        System.out.println(user);
+
+        if(user==null)
+        {
+            System.out.println("Fetching from DB");
+           Optional<User> optData = userRepository.findById(id);
+           if(optData.isEmpty()==false)
+           {
+               user=optData.get();
+               redisTemplate.opsForValue().set("User_"+id, user);
+           }
+
+        }
+        
+       
+        return user;
+
+    }
+
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
