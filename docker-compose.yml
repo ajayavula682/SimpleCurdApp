@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    container_name: simplecurd-app
+    ports:
+      - "8088:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/BankDb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Sree@1324
+      SPRING_DATA_REDIS_HOST: host.docker.internal
+      SPRING_DATA_REDIS_PORT: 6379
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

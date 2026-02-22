@@ -18,6 +18,11 @@ public class RedisConfig {
     // Redis configuration can be added here in the future
     //user_10
     //product_24
+    /**
+     * 
+     * @param redisConnectionFactory
+     * @return
+     */
 
     @Bean
     RedisTemplate<String, Object> RedisTemplate(RedisConnectionFactory redisConnectionFactory) 

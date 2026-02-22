@@ -63,7 +63,10 @@ public class UserService {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new DuplicateResourceException("User", "email", user.getEmail());
         }
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        // Cache the newly created user
+        redisTemplate.opsForValue().set("User_" + savedUser.getId(), savedUser);
+        return savedUser;
     }
 
     public User updateUser(Long id, User userDetails) {
@@ -81,12 +84,17 @@ public class UserService {
         existingUser.setAddress(userDetails.getAddress());
         existingUser.setIsActive(userDetails.getIsActive());
 
-        return userRepository.save(existingUser);
+        User updatedUser = userRepository.save(existingUser);
+        // Update cache with modified user
+        redisTemplate.opsForValue().set("User_" + id, updatedUser);
+        return updatedUser;
     }
 
     public void deleteUser(Long id) {
         User user = getUserById(id);
         userRepository.delete(user);
+        // Remove from cache
+        redisTemplate.delete("User_" + id);
     }
 
     public Optional<User> findByEmail(String email) {
@@ -104,12 +112,18 @@ public class UserService {
     public User deactivateUser(Long id) {
         User user = getUserById(id);
         user.setIsActive(false);
-        return userRepository.save(user);
+        User deactivatedUser = userRepository.save(user);
+        // Update cache with deactivated user
+        redisTemplate.opsForValue().set("User_" + id, deactivatedUser);
+        return deactivatedUser;
     }
 
     public User activateUser(Long id) {
         User user = getUserById(id);
         user.setIsActive(true);
-        return userRepository.save(user);
+        User activatedUser = userRepository.save(user);
+        // Update cache with activated user
+        redisTemplate.opsForValue().set("User_" + id, activatedUser);
+        return activatedUser;
     }
 }
