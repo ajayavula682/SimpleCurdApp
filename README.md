@@ -1,6 +1,6 @@
 # SimpleCurdApp
 
-A comprehensive Spring Boot REST API application demonstrating CRUD (Create, Read, Update, Delete) operations for managing Users and Products with advanced features including Redis caching, Spring Security, and Prometheus monitoring.
+A comprehensive Full-Stack CRUD application with Spring Boot REST API backend and interactive frontend dashboard for managing Users and Products. Features include Redis caching with cache invalidation, Swagger API documentation, Spring Security, real-time UI updates, and Prometheus monitoring.
 
 ## 📋 Table of Contents
 
@@ -10,7 +10,9 @@ A comprehensive Spring Boot REST API application demonstrating CRUD (Create, Rea
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Running the Application](#running-the-application)
+- [Frontend Dashboard](#frontend-dashboard)
 - [API Documentation](#api-documentation)
+- [Swagger UI](#swagger-ui)
 - [Docker Support](#docker-support)
 - [Monitoring](#monitoring)
 - [Project Structure](#project-structure)
@@ -18,17 +20,27 @@ A comprehensive Spring Boot REST API application demonstrating CRUD (Create, Rea
 
 ## ✨ Features
 
-### User Management
+### Frontend Dashboard
+- **Modern UI**: Responsive web interface with tabbed navigation
+- **User Management**: Interactive table with search, filter, and CRUD operations
+- **Product Management**: Product inventory with filters by category and availability
+- **Real-time Updates**: Live data synchronization with backend
+- **Modal Forms**: User-friendly forms for creating and editing records
+- **Toast Notifications**: Visual feedback for all operations
+- **API Info Tab**: Built-in API documentation viewer
+
+### User Management (Backend + Frontend)
 - Create, read, update, and delete users
-- Search users by keyword
+- Search users by keyword (name, email, phone, address)
 - Get users by email
 - Activate/deactivate user accounts
 - Filter active users
 - Duplicate email validation
+- **Redis caching with automatic cache invalidation**
 
-### Product Management
+### Product Management (Backend + Frontend)
 - Complete CRUD operations for products
-- Search products by keyword
+- Search products by keyword (name, description, category)
 - Filter products by category
 - Get products by price range
 - Filter available products
@@ -36,30 +48,47 @@ A comprehensive Spring Boot REST API application demonstrating CRUD (Create, Rea
 - Update product availability
 - Update product quantity
 - Automatic timestamp tracking (created_at, updated_at)
+- Category-based organization
 
-### Additional Features
-- **Redis Caching**: Improved performance with Redis integration
+### Advanced Features
+- **Swagger/OpenAPI Documentation**: Interactive API documentation and testing
+- **Redis Caching**: Improved performance with intelligent cache invalidation
 - **Spring Security**: Secured endpoints with authentication
-- **Exception Handling**: Global exception handling with custom error responses
-- **Validation**: Input validation with Jakarta Bean Validation
-- **Actuator**: Health checks and metrics monitoring
-- **Prometheus**: Metrics export for monitoring
+- **Global Exception Handling**: Custom error responses with proper HTTP status codes
+- **Input Validation**: Jakarta Bean Validation for data integrity
+- **Spring Boot Actuator**: Health checks and metrics monitoring
+- **Prometheus Integration**: Metrics export for monitoring systems
 - **Lombok**: Reduced boilerplate code
 - **JPA/Hibernate**: Database abstraction with MySQL support
+- **Docker Ready**: Containerization support with Docker and Docker Compose
 
 ## 🛠 Technology Stack
 
+### Backend
 - **Java**: 17
 - **Spring Boot**: 3.2.1
 - **Spring Data JPA**: Database operations
 - **Spring Security**: Authentication and authorization
 - **Spring Boot Actuator**: Application monitoring
-- **MySQL**: Primary database
-- **Redis**: Caching layer
-- **Lombok**: Code generation
-- **Maven**: Build tool
+- **MySQL**: Primary database (version 8.0+)
+- **Redis**: Caching layer with cache invalidation
+- **Lombok**: Code generation and boilerplate reduction
+- **Maven**: Build and dependency management
 - **Micrometer**: Metrics with Prometheus support
+- **Springdoc OpenAPI**: Swagger documentation (v2.3.0)
+
+### Frontend
+- **HTML5**: Semantic markup
+- **CSS3**: Modern styling with flexbox and grid
+- **JavaScript (ES6+)**: Interactive functionality
+- **Fetch API**: RESTful API communication
+- **Responsive Design**: Mobile-friendly interface
+
+### DevOps & Tools
 - **Docker**: Containerization support
+- **Docker Compose**: Multi-container orchestration
+- **Maven Wrapper**: Consistent build environment
+- **Git**: Version control
 
 ## 📦 Prerequisites
 
@@ -114,9 +143,12 @@ The application uses MySQL by default. Configure the following properties in `ap
 spring.datasource.url=jdbc:mysql://localhost:3306/BankDb
 spring.datasource.username=root
 spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
 ```
+
+**Important**: Changed from `create-drop` to `update` to persist data across application restarts.
 
 ### Redis Configuration
 
@@ -126,11 +158,24 @@ spring.data.redis.host=localhost
 spring.data.redis.port=6379
 ```
 
+**Note**: Redis is used for caching user data with automatic cache invalidation on create, update, and delete operations.
+
+### Swagger/OpenAPI Configuration
+
+```properties
+# Swagger/OpenAPI Configuration
+springdoc.api-docs.path=/api-docs
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.swagger-ui.enabled=true
+springdoc.swagger-ui.operationsSorter=method
+springdoc.swagger-ui.tagsSorter=alpha
+```
+
 ### Server Configuration
 
 ```properties
 # Server Port
-server.port=8088
+server.port=8082
 ```
 
 ### Actuator Endpoints
@@ -143,25 +188,26 @@ management.endpoint.health.show-details=always
 
 ## 🏃 Running the Application
 
-### Option 1: Using Maven
+### Option 1: Using Maven Wrapper (Recommended)
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-Or:
+### Option 2: Using Maven
+
 ```bash
 mvn spring-boot:run
 ```
 
-### Option 2: Using JAR file
+### Option 3: Using JAR file
 
 ```bash
 ./mvnw clean package -DskipTests
-java -jar target/SimpleCurdApp-0.0.1-SNAPSHOT.jar
+java -jar target/app.jar
 ```
 
-### Option 3: Using Docker
+### Option 4: Using Docker
 
 ```bash
 # Build the application
@@ -171,17 +217,118 @@ java -jar target/SimpleCurdApp-0.0.1-SNAPSHOT.jar
 docker build -t simplecurdapp:latest .
 
 # Run the container
-docker run -p 8088:8088 simplecurdapp:latest
+docker run -p 8082:8082 simplecurdapp:latest
 ```
 
-The application will start on **http://localhost:8088**
+### Option 5: Using Docker Compose
+
+```bash
+docker-compose up -d
+```
+
+The application will start on **http://localhost:8082**
+
+### Verify the Application is Running
+
+```bash
+# Health check
+curl http://localhost:8082/actuator/health
+
+# Expected response: {"status":"UP"}
+```
+
+## 🎨 Frontend Dashboard
+
+The application includes a modern, responsive web dashboard for managing users and products.
+
+### Accessing the Dashboard
+
+Open your browser and navigate to:
+```
+http://localhost:8082
+```
+Or open the file directly:
+```
+frontend/index.html
+```
+
+### Dashboard Features
+
+#### 1. **Products Tab**
+- View all products in a table format
+- Search products by name, description, or category
+- Filter by category (dropdown)
+- Filter by availability status
+- Add new products with the "+" button
+- Edit products by clicking the Edit button
+- Delete products with confirmation
+- See real-time stock levels and prices
+
+#### 2. **Users Tab**
+- View all users in a table format
+- Search users by name, email, phone, or address
+- Filter active/inactive users
+- Add new users with the "+" button
+- Edit user information
+- Delete users with confirmation
+- Toggle user active status
+
+#### 3. **API Info Tab**
+- Quick reference for all API endpoints
+- Product API endpoints with descriptions
+- User API endpoints with descriptions
+- Links to Swagger documentation
+
+### Frontend Features
+
+✅ **Responsive Design** - Works on desktop, tablet, and mobile  
+✅ **Real-time Updates** - Changes reflect immediately  
+✅ **Search & Filter** - Quick data finding capabilities  
+✅ **Modal Forms** - Clean user experience for data entry  
+✅ **Toast Notifications** - Visual feedback for all actions  
+✅ **Error Handling** - User-friendly error messages  
+✅ **Loading States** - Activity indicators during API calls
 
 ## 📚 API Documentation
 
 ### Base URL
 ```
-http://localhost:8088
+http://localhost:8082
 ```
+
+## 📖 Swagger UI
+
+The application includes comprehensive Swagger/OpenAPI documentation for interactive API testing.
+
+### Accessing Swagger UI
+
+Once the application is running, access Swagger UI at:
+
+**Swagger UI (Interactive)**:
+```
+http://localhost:8082/swagger-ui.html
+```
+
+**OpenAPI JSON Specification**:
+```
+http://localhost:8082/api-docs
+```
+
+**OpenAPI YAML Specification**:
+```
+http://localhost:8082/api-docs.yaml
+```
+
+### Swagger Features
+
+✅ **Interactive Testing** - Test APIs directly from the browser  
+✅ **Request/Response Examples** - See data structures clearly  
+✅ **Auto-generated Documentation** - Always up-to-date with code  
+✅ **Schema Definitions** - Detailed model information  
+✅ **Try It Out** - Execute API calls with custom parameters  
+✅ **Response Codes** - All possible HTTP status codes documented  
+
+For detailed Swagger documentation, see [SWAGGER_DOCUMENTATION.md](SWAGGER_DOCUMENTATION.md).
 
 ### User Endpoints
 
@@ -221,32 +368,57 @@ http://localhost:8088
 
 #### Create User
 ```bash
-curl -X POST http://localhost:8088/api/users \
+curl -X POST http://localhost:8082/api/users \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",
     "email": "john.doe@example.com",
-    "phone": "123-456-7890",
-    "address": "123 Main St, City, State"
+    "phone": "555-0101",
+    "address": "123 Main St, New York, NY 10001",
+    "isActive": true
   }'
 ```
 
 #### Create Product
 ```bash
-curl -X POST http://localhost:8088/api/products \
+curl -X POST http://localhost:8082/api/products \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Gaming Laptop",
     "description": "High-performance gaming laptop with RTX graphics",
     "price": 1299.99,
     "quantity": 10,
-    "category": "Electronics"
+    "category": "Electronics",
+    "isAvailable": true
   }'
 ```
 
 #### Search Products
 ```bash
-curl -X GET "http://localhost:8088/api/products/search?keyword=laptop"
+curl -X GET "http://localhost:8082/api/products/search?keyword=laptop"
+```
+
+#### Get Available Products
+```bash
+curl -X GET "http://localhost:8082/api/products/available"
+```
+
+#### Update User
+```bash
+curl -X PUT http://localhost:8082/api/users/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Updated",
+    "email": "john.updated@example.com",
+    "phone": "555-0102",
+    "address": "456 Oak Ave, Los Angeles, CA 90001",
+    "isActive": true
+  }'
+```
+
+#### Get Products by Price Range
+```bash
+curl -X GET "http://localhost:8082/api/products/price-range?minPrice=100&maxPrice=500"
 ```
 
 For more detailed API testing examples, see [API_TESTING_GUIDE.md](API_TESTING_GUIDE.md).
@@ -263,11 +435,27 @@ docker build -t simplecurdapp:latest .
 
 ### Run Container
 ```bash
-docker run -p 8088:8088 \
+docker run -p 8082:8082 \
   -e SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/BankDb \
   -e SPRING_DATASOURCE_USERNAME=root \
   -e SPRING_DATASOURCE_PASSWORD=your_password \
+  -e SPRING_DATA_REDIS_HOST=host.docker.internal \
   simplecurdapp:latest
+```
+
+### Using Docker Compose
+
+The application includes a `docker-compose.yml` file for easy multi-container setup:
+
+```bash
+# Start all services (app, mysql, redis)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
 ```
 
 ## 📊 Monitoring
@@ -276,14 +464,14 @@ docker run -p 8088:8088 \
 
 The application exposes several actuator endpoints for monitoring:
 
-- **Health Check**: `http://localhost:8088/actuator/health`
-- **Metrics**: `http://localhost:8088/actuator/metrics`
-- **Prometheus**: `http://localhost:8088/actuator/prometheus`
-- **Loggers**: `http://localhost:8088/actuator/loggers`
+- **Health Check**: `http://localhost:8082/actuator/health`
+- **Metrics**: `http://localhost:8082/actuator/metrics`
+- **Prometheus**: `http://localhost:8082/actuator/prometheus`
+- **Loggers**: `http://localhost:8082/actuator/loggers`
 
 ### Health Check Example
 ```bash
-curl http://localhost:8088/actuator/health
+curl http://localhost:8082/actuator/health
 ```
 
 Response:
