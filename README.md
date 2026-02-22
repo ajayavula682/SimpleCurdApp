@@ -493,41 +493,55 @@ Response:
 
 ```
 SimpleCurdApp/
+├── frontend/                       # Frontend Dashboard
+│   ├── index.html                 # Main HTML page with tabbed interface
+│   ├── app.js                     # JavaScript for API calls and UI logic
+│   ├── styles.css                 # CSS styling
+│   └── README.html                # Frontend documentation
 ├── src/
 │   ├── main/
 │   │   ├── java/com/example/simplecurdapp/
-│   │   │   ├── config/             # Configuration classes
-│   │   │   │   ├── RedisConfig.java
-│   │   │   │   └── SecurityConfig.java
-│   │   │   ├── controller/         # REST controllers
-│   │   │   │   ├── UserController.java
-│   │   │   │   ├── ProductController.java
-│   │   │   │   └── EntryPointOne.java
-│   │   │   ├── model/              # Entity models
-│   │   │   │   ├── User.java
-│   │   │   │   └── Product.java
-│   │   │   ├── repository/         # JPA repositories
-│   │   │   │   ├── UserRepository.java
-│   │   │   │   └── ProductRepository.java
-│   │   │   ├── service/            # Business logic
-│   │   │   │   ├── UserService.java
-│   │   │   │   └── ProductService.java
-│   │   │   ├── exception/          # Exception handling
-│   │   │   │   ├── GlobalExceptionHandler.java
-│   │   │   │   ├── ResourceNotFoundException.java
-│   │   │   │   ├── DuplicateResourceException.java
-│   │   │   │   └── ErrorResponse.java
-│   │   │   └── SimpleCurdAppApplication.java
+│   │   │   ├── config/            # Configuration classes
+│   │   │   │   ├── RedisConfig.java          # Redis caching configuration
+│   │   │   │   ├── SecurityConfig.java       # Spring Security setup
+│   │   │   │   └── SwaggerConfig.java        # Swagger/OpenAPI configuration
+│   │   │   ├── controller/        # REST controllers
+│   │   │   │   ├── UserController.java       # User API endpoints (11 endpoints)
+│   │   │   │   ├── ProductController.java    # Product API endpoints (14 endpoints)
+│   │   │   │   └── EntryPointOne.java        # Basic test endpoint
+│   │   │   ├── model/             # Entity models
+│   │   │   │   ├── User.java                 # User entity with validation
+│   │   │   │   └── Product.java              # Product entity with timestamps
+│   │   │   ├── repository/        # JPA repositories
+│   │   │   │   ├── UserRepository.java       # User data access with custom queries
+│   │   │   │   └── ProductRepository.java    # Product data access with custom queries
+│   │   │   ├── service/           # Business logic
+│   │   │   │   ├── UserService.java          # User service with Redis caching
+│   │   │   │   └── ProductService.java       # Product service
+│   │   │   ├── exception/         # Exception handling
+│   │   │   │   ├── GlobalExceptionHandler.java    # Global error handling
+│   │   │   │   ├── ResourceNotFoundException.java # 404 errors
+│   │   │   │   ├── DuplicateResourceException.java # 409 errors
+│   │   │   │   └── ErrorResponse.java            # Error response DTO
+│   │   │   └── SimpleCurdAppApplication.java     # Main Spring Boot class
 │   │   └── resources/
-│   │       └── application.properties
+│   │       ├── application.properties        # Application configuration
+│   │       ├── static/                       # Static resources directory
+│   │       └── templates/                    # Templates directory
 │   └── test/
 │       └── java/com/example/simplecurdapp/
-│           └── SimpleCurdAppApplicationTests.java
-├── target/                         # Build output
-├── Dockerfile                      # Docker configuration
-├── pom.xml                         # Maven configuration
-├── API_TESTING_GUIDE.md           # Detailed API testing guide
-└── README.md                       # This file
+│           └── SimpleCurdAppApplicationTests.java    # Unit tests
+├── target/                        # Build output (generated)
+│   └── app.jar                    # Executable JAR file
+├── Dockerfile                     # Docker configuration
+├── docker-compose.yml             # Multi-container Docker setup
+├── pom.xml                        # Maven configuration
+├── mvnw                           # Maven wrapper (Unix)
+├── mvnw.cmd                       # Maven wrapper (Windows)
+├── API_TESTING_GUIDE.md          # Detailed API testing guide
+├── SWAGGER_DOCUMENTATION.md       # Swagger usage guide
+├── README.md                      # This file
+└── insert_sample_data.sql        # Sample data for testing
 ```
 
 ## 🤝 Contributing
@@ -539,6 +553,156 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
+## 🔑 Key Features & Improvements
+
+### Recent Updates
+
+✅ **Swagger/OpenAPI Integration** - Interactive API documentation at `/swagger-ui.html`  
+✅ **Frontend Dashboard** - Modern responsive UI for managing users and products  
+✅ **Redis Cache Invalidation** - Automatic cache updates on CRUD operations  
+✅ **Database Persistence** - Changed from `create-drop` to `update` mode  
+✅ **Comprehensive Documentation** - Detailed guides for API testing and Swagger  
+✅ **Docker Compose Support** - Easy multi-container deployment  
+✅ **Enhanced Error Handling** - Improved error messages and HTTP status codes  
+
+### Cache Implementation
+
+The application implements intelligent Redis caching for user data:
+- **Cache on Read**: User data is cached on first retrieval
+- **Cache on Create**: New users are immediately cached
+- **Cache on Update**: Cache is refreshed when user is updated
+- **Cache on Delete**: Cache entry is removed when user is deleted
+- **Cache Key Pattern**: `User_{id}` (e.g., `User_1`, `User_2`)
+
+### Security Features
+
+- Password encoding (if authentication is fully implemented)
+- CORS configuration for frontend integration
+- Protected endpoints with Spring Security
+- Input validation to prevent injection attacks
+
+## 🧪 Testing
+
+### Sample Data
+Load sample data for testing:
+```bash
+mysql -u root -p'your_password' BankDb < insert_sample_data.sql
+```
+
+This will insert:
+- 5 sample users (mixed active/inactive)
+- 10 sample products (various categories, prices, stock levels)
+
+### Manual Testing with cURL
+
+See [API_TESTING_GUIDE.md](API_TESTING_GUIDE.md) for comprehensive testing examples.
+
+### Swagger Testing
+
+Use Swagger UI for interactive testing:
+1. Navigate to `http://localhost:8082/swagger-ui.html`
+2. Select an endpoint
+3. Click "Try it out"
+4. Enter parameters and execute
+
+## 🚀 Quick Start Guide
+
+### For Backend Development
+```bash
+# 1. Clone the repository
+git clone https://github.com/ajayavula682/SimpleCurdApp.git
+cd SimpleCurdApp
+
+# 2. Set up MySQL database
+mysql -u root -p -e "CREATE DATABASE BankDb;"
+
+# 3. Update application.properties with your credentials
+
+# 4. Start Redis (optional, for caching)
+redis-server
+
+# 5. Run the application
+./mvnw spring-boot:run
+
+# 6. Access Swagger UI
+open http://localhost:8082/swagger-ui.html
+```
+
+### For Frontend Testing
+```bash
+# 1. Start the backend (see above)
+
+# 2. Open the frontend dashboard
+open frontend/index.html
+# Or navigate to: http://localhost:8082
+
+# 3. Test CRUD operations through the UI
+```
+
+## 📊 API Endpoints Summary
+
+### User Management (11 endpoints)
+- Basic CRUD: `GET`, `POST`, `PUT`, `DELETE`
+- Search & Filter: `/search`, `/active`, `/email/{email}`
+- Status Management: `/activate`, `/deactivate`
+- Cache-enabled: `/get/{id}`
+
+### Product Management (14 endpoints)
+- Basic CRUD: `GET`, `POST`, `PUT`, `DELETE`
+- Search & Filter: `/search`, `/category/{category}`, `/available`, `/in-stock`
+- Price Range: `/price-range?minPrice={min}&maxPrice={max}`
+- Inventory Management: `/availability`, `/quantity`
+- Categories: `/categories` (list all unique categories)
+
+## 🛡️ Best Practices Implemented
+
+✅ **RESTful API Design** - Proper HTTP methods and status codes  
+✅ **Separation of Concerns** - Controller → Service → Repository pattern  
+✅ **DTO Pattern** - ErrorResponse for consistent error handling  
+✅ **Exception Handling** - Global exception handler for all errors  
+✅ **Validation** - Input validation with Jakarta Bean Validation  
+✅ **Logging** - SQL logging with formatted output  
+✅ **Configuration Management** - Externalized configuration via properties  
+✅ **Code Quality** - Lombok to reduce boilerplate  
+✅ **Documentation** - Swagger for API docs, comments in code  
+✅ **Caching Strategy** - Redis with proper cache invalidation  
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Issue: Application won't start**
+- Check if port 8082 is available
+- Verify MySQL is running on port 3306
+- Check database credentials in `application.properties`
+
+**Issue: Redis connection errors**
+- Verify Redis is running: `redis-cli ping` (should return PONG)
+- Check Redis host and port in configuration
+- Redis is optional; caching will be disabled if unavailable
+
+**Issue: Frontend not loading data**
+- Verify backend is running on port 8082
+- Check browser console for errors
+- Verify CORS is properly configured
+- Check network tab for failed API calls
+
+**Issue: Swagger UI not accessible**
+- Ensure application has started successfully
+- Try: `http://localhost:8082/swagger-ui/index.html`
+- Check for any compilation errors
+
+**Issue: Database errors**
+- Verify MySQL database `BankDb` exists
+- Check hibernate.ddl-auto is set to `update`
+- Review application logs for SQL errors
+
+## 📚 Additional Documentation
+
+- **API Testing Guide**: [API_TESTING_GUIDE.md](API_TESTING_GUIDE.md)
+- **Swagger Documentation**: [SWAGGER_DOCUMENTATION.md](SWAGGER_DOCUMENTATION.md)
+- **Frontend Documentation**: [frontend/README.html](frontend/README.html)
 
 ## 📝 License
 
