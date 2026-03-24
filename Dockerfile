@@ -10,22 +10,22 @@ COPY pom.xml .
 COPY mvnw .
 COPY .mvn .mvn
 
-# Download dependencies (cached layer)
-RUN ./mvnw dependency:go-offline
+# Download dependencies in a cache-friendly layer
+RUN ./mvnw -B -DskipTests dependency:go-offline
 
 # Copy source code
 COPY src ./src
 
-# Build the application
-RUN ./mvnw clean package -DskipTests
+# Build the application jar
+RUN ./mvnw -B clean package -DskipTests
 
 # Stage 2: Run the application
-FROM eclipse-temurin:17-jre
+FROM gcr.io/distroless/java17-debian12:nonroot
 
 WORKDIR /app
 
 # Copy the built JAR from builder stage
-COPY --from=builder /build/target/app.jar app.jar
+COPY --from=builder /build/target/app.jar /app/app.jar
 
 EXPOSE 8088
 
