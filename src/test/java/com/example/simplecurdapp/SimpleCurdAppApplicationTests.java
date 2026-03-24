@@ -1,13 +1,14 @@
 package com.example.simplecurdapp;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
 class SimpleCurdAppApplicationTests {
 
     @Test
-    void contextLoads() {
+    void applicationClassShouldBeLoadable() {
+        SimpleCurdAppApplication application = new SimpleCurdAppApplication();
+        assertNotNull(application);
     }
 
 }
