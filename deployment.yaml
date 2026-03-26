@@ -1,0 +1,42 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simplecurdapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: simplecurdapp
+  template:
+    metadata:
+      labels:
+        app: simplecurdapp
+    spec:
+      containers:
+      - name: simplecurdapp
+        image: simplecurdapp:slim
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8082
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simplecurdapp-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: simplecurdapp
+  ports:
+    - protocol: TCP
+      port: 8088
+      targetPort: 8082
