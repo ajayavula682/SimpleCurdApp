@@ -2,7 +2,13 @@
 
 ## Starting the Application
 
-First, ensure your application is running on `http://localhost:8082`
+First, ensure your application is running.
+
+**If running locally (IDE/Maven/Java):**
+Access the application at `http://localhost:8082`
+
+**If running in Docker/Kubernetes:**
+Access the application at `http://localhost:8088`
 
 ### Option 1: Using IDE
 - Open the project in your IDE
@@ -21,12 +27,14 @@ java -jar target/SimpleCurdApp-0.0.1-SNAPSHOT.jar
 
 ## API Endpoints Overview
 
+(Note: If running in Kubernetes/Docker, use port **8088** instead of 8082 in the examples below)
+
 ### Base URLs:
-- **Users API**: `http://localhost:8082/api/users`
-- **Products API**: `http://localhost:8082/api/products`
-- **Info Endpoint**: `http://localhost:8082/api/info`
-- **Health Check**: `http://localhost:8082/api/health`
-- **H2 Database Console**: `http://localhost:8082/h2-console`
+- **Users API**: `http://localhost:8082/api/users` (or `http://localhost:8088/api/users`)
+- **Products API**: `http://localhost:8082/api/products` (or `http://localhost:8088/api/products`)
+- **Info Endpoint**: `http://localhost:8082/api/info` (or `http://localhost:8088/api/info`)
+- **Health Check**: `http://localhost:8082/api/health` (or `http://localhost:8088/api/health`)
+- **H2 Database Console**: `http://localhost:8082/h2-console` (or `http://localhost:8088/h2-console`)
 
 ---
 
