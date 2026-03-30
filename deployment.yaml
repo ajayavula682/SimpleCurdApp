@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simplecurdapp
+  name: test-jsp-ecom-platform
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: simplecurdapp
+      app: test-jsp-ecom-platform
   template:
     metadata:
       labels:
-        app: simplecurdapp
+        app: test-jsp-ecom-platform
     spec:
       containers:
-      - name: simplecurdapp
-        image: simplecurdapp:slim
+      - name: test-jsp-ecom-platform
+        image: test-jsp-ecom-platform:slim
         imagePullPolicy: Never
         ports:
         - containerPort: 8082
@@ -31,11 +31,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: simplecurdapp-service
+  name: test-jsp-ecom-platform-service
 spec:
   type: LoadBalancer
   selector:
-    app: simplecurdapp
+    app: test-jsp-ecom-platform
   ports:
     - protocol: TCP
       port: 8088

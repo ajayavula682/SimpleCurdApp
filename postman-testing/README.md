@@ -1,12 +1,12 @@
 # Postman Testing Guide
 
 ## Overview
-This folder contains Postman collections and environments for testing all SimpleCrudApp APIs.
+This folder contains Postman collections and environments for testing all test-jsp-ecom platform APIs.
 
 ## Files Included
 
-1. **SimpleCurdApp-API-Collection.json** - Complete API collection with all endpoints
-2. **SimpleCurdApp-Environment.json** - Environment variables (base URL, IDs, etc.)
+1. **test-jsp-ecom-platform-API-Collection.json** - Complete API collection with all endpoints
+2. **test-jsp-ecom-platform-Environment.json** - Environment variables (base URL, IDs, etc.)
 
 ## How to Import in Postman
 
@@ -15,17 +15,17 @@ Launch Postman desktop application
 
 ### Step 2: Import Collection
 - Click **File** → **Import**
-- Select `SimpleCurdApp-API-Collection.json`
+- Select `test-jsp-ecom-platform-API-Collection.json`
 - Click **Import**
 
 ### Step 3: Import Environment
 - Click **File** → **Import**
-- Select `SimpleCurdApp-Environment.json`
+- Select `test-jsp-ecom-platform-Environment.json`
 - Click **Import**
 
 ### Step 4: Select Environment
 - In the top-right corner, find the **Environment** dropdown
-- Select **SimpleCrudApp Environment**
+- Select **test-jsp-ecom platform Environment**
 
 ## Available API Endpoints
 
@@ -101,7 +101,7 @@ Variables are referenced using `{{variable_name}}` syntax:
 ## Prerequisites
 
 - Postman installed (Download from https://www.postman.com/downloads/)
-- SimpleCrudApp running on `http://localhost:8080`
+- test-jsp-ecom platform running on `http://localhost:8080`
 - Database configured and populated with data
 
 ## Tips

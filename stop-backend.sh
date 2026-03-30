@@ -11,7 +11,7 @@ if [ -f .backend.pid ]; then
     rm -f .backend.pid
 else
     echo "⚠️  No .backend.pid file; attempting to kill any running Java app."
-    pkill -f SimpleCurdAppApplication || true
+    pkill -f TestJspEcomPlatformApplication || true
 fi
 
 # stop Redis

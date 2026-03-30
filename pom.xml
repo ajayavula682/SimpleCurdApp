@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>SimpleCurdApp</artifactId>
+    <artifactId>test-jsp-ecom-platform</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SimpleCurdAppmvn clean compile</name>
-    <description>SimpleCurdApp</description>
+    <name>test-jsp-ecom platform</name>
+    <description>test-jsp-ecom platform</description>
     <url/>
     <licenses>
         <license/>
