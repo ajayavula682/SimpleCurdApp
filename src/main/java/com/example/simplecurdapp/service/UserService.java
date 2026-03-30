@@ -5,7 +5,6 @@ import com.example.simplecurdapp.exception.ResourceNotFoundException;
 import com.example.simplecurdapp.model.User;
 import com.example.simplecurdapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,34 +18,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    // Redis disabled
+    // @Autowired
+    // private RedisTemplate<String, Object> redisTemplate;
 
 
     public User getUserData(Long id)
     {
-
-        //User_10
-
-        User user=(User) redisTemplate.opsForValue().get("User_"+id);
-
-        System.out.println(user);
-
-        if(user==null)
-        {
-            System.out.println("Fetching from DB");
-           Optional<User> optData = userRepository.findById(id);
-           if(optData.isEmpty()==false)
-           {
-               user=optData.get();
-               redisTemplate.opsForValue().set("User_"+id, user);
-           }
-
-        }
-        
-       
-        return user;
-
+        // Redis caching disabled - fetching directly from database
+        Optional<User> optData = userRepository.findById(id);
+        return optData.orElse(null);
     }
 
 
@@ -64,8 +45,8 @@ public class UserService {
             throw new DuplicateResourceException("User", "email", user.getEmail());
         }
         User savedUser = userRepository.save(user);
-        // Cache the newly created user
-        redisTemplate.opsForValue().set("User_" + savedUser.getId(), savedUser);
+        // Redis caching disabled
+        // redisTemplate.opsForValue().set("User_" + savedUser.getId(), savedUser);
         return savedUser;
     }
 
@@ -85,16 +66,16 @@ public class UserService {
         existingUser.setIsActive(userDetails.getIsActive());
 
         User updatedUser = userRepository.save(existingUser);
-        // Update cache with modified user
-        redisTemplate.opsForValue().set("User_" + id, updatedUser);
+        // Redis caching disabled
+        // redisTemplate.opsForValue().set("User_" + id, updatedUser);
         return updatedUser;
     }
 
     public void deleteUser(Long id) {
         User user = getUserById(id);
         userRepository.delete(user);
-        // Remove from cache
-        redisTemplate.delete("User_" + id);
+        // Redis caching disabled
+        // redisTemplate.delete("User_" + id);
     }
 
     public Optional<User> findByEmail(String email) {
@@ -113,8 +94,8 @@ public class UserService {
         User user = getUserById(id);
         user.setIsActive(false);
         User deactivatedUser = userRepository.save(user);
-        // Update cache with deactivated user
-        redisTemplate.opsForValue().set("User_" + id, deactivatedUser);
+        // Redis caching disabled
+        // redisTemplate.opsForValue().set("User_" + id, deactivatedUser);
         return deactivatedUser;
     }
 
@@ -122,8 +103,8 @@ public class UserService {
         User user = getUserById(id);
         user.setIsActive(true);
         User activatedUser = userRepository.save(user);
-        // Update cache with activated user
-        redisTemplate.opsForValue().set("User_" + id, activatedUser);
+        // Redis caching disabled
+        // redisTemplate.opsForValue().set("User_" + id, activatedUser);
         return activatedUser;
     }
 }

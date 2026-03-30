@@ -83,11 +83,11 @@
                     <artifactId>micrometer-registry-prometheus</artifactId>
                 </dependency>
 
-                <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
-                <dependency>
+                <!-- Redis dependency disabled -->
+                <!-- <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-data-redis</artifactId>
-                </dependency>
+                </dependency> -->
 
                 <!-- Swagger/OpenAPI Documentation -->
                 <dependency>
