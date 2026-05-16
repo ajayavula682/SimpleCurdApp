@@ -1,4 +1,4 @@
-# CRUD API Testing Guide for SimpleCurdApp
+# CRUD API Testing Guide for test-jsp-ecom platform
 
 ## Starting the Application
 
@@ -12,7 +12,7 @@ Access the application at `http://localhost:8088`
 
 ### Option 1: Using IDE
 - Open the project in your IDE
-- Run `SimpleCurdAppApplication.java` main method
+- Run `TestJspEcomPlatformApplication.java` main method
 
 ### Option 2: Using Maven (if compilation works)
 ```bash
@@ -22,7 +22,7 @@ mvn spring-boot:run
 ### Option 3: Using Java directly
 ```bash
 mvn clean package -DskipTests
-java -jar target/SimpleCurdApp-0.0.1-SNAPSHOT.jar
+java -jar target/app.jar
 ```
 
 ## API Endpoints Overview
@@ -207,7 +207,7 @@ curl -X PATCH "http://localhost:8082/api/products/1/quantity?quantity=25"
 
 ### Setup:
 1. Download and install Postman
-2. Create a new collection called "SimpleCurdApp API"
+2. Create a new collection called "test-jsp-ecom platform API"
 3. Set base URL as environment variable: `{{baseUrl}} = http://localhost:8082`
 
 ### Sample Postman Requests:

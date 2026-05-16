@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: simplecurdapp-hpa
+  name: test-jsp-ecom-platform-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: simplecurdapp
+    name: test-jsp-ecom-platform
   minReplicas: 2 # Minimum number of replicas
   maxReplicas: 10 # Maximum number of replicas
   metrics: # Define the metrics to monitor for scaling

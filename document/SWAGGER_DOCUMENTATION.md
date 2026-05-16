@@ -1,7 +1,7 @@
 # Swagger API Documentation
 
 ## Overview
-Swagger/OpenAPI documentation has been successfully integrated into SimpleCurdApp. This provides interactive API documentation where you can explore and test all available endpoints.
+Swagger/OpenAPI documentation has been successfully integrated into test-jsp-ecom platform. This provides interactive API documentation where you can explore and test all available endpoints.
 
 ## Accessing Swagger UI
 
@@ -89,7 +89,7 @@ The documentation is organized into two main groups:
 ## Configuration
 
 The Swagger configuration is located in:
-- **Config Class**: `src/main/java/com/example/simplecurdapp/config/SwaggerConfig.java`
+- **Config Class**: `src/main/java/com/example/testjspecomplatform/config/SwaggerConfig.java`
 - **Application Properties**: `src/main/resources/application.properties`
 
 ### Swagger Properties

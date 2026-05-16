@@ -1,6 +1,6 @@
 # Kubernetes Deployment Guide
 
-This guide explains the Kubernetes resources used to deploy the `SimpleCurdApp` and provides the necessary commands to manage the deployment.
+This guide explains the Kubernetes resources used to deploy the `test-jsp-ecom platform` and provides the necessary commands to manage the deployment.
 
 ## Resource Files
 
@@ -8,7 +8,7 @@ This guide explains the Kubernetes resources used to deploy the `SimpleCurdApp` 
 This file defines the **Deployment** of the application.
 - **Kind:** Deployment
 - **Replicas:** 2 (Initial number of pod instances)
-- **Image:** `simplecurdapp:slim` (The Docker image built locally)
+- **Image:** `test-jsp-ecom-platform:slim` (The Docker image built locally)
 - **Ports:** Exposes container port `8082`.
 - **Resources:** Sets CPU and Memory requests/limits, which are essential for the Horizontal Pod Autoscaler to function.
 
@@ -17,12 +17,12 @@ This file defines the **Service** that exposes the application.
 - **Kind:** Service
 - **Type:** LoadBalancer (Exposes the service externally)
 - **Port:** Maps external port `8088` to internal container port `8082`.
-- **Selector:** routes traffic to pods labeled `app: simplecurdapp`.
+- **Selector:** routes traffic to pods labeled `app: test-jsp-ecom-platform`.
 
 ### 3. `hpa.yaml`
 This file defines the **Horizontal Pod Autoscaler (HPA)**.
 - **Kind:** HorizontalPodAutoscaler
-- **Scale Target:** The `simplecurdapp` Deployment.
+- **Scale Target:** The `test-jsp-ecom-platform` Deployment.
 - **Range:** Scales between **2** (min) and **10** (max) replicas.
 - **Trigger:** Scales up when average CPU utilization exceeds **50%**.
 

@@ -1,4 +1,4 @@
-# SimpleCurdApp
+# test-jsp-ecom platform
 
 A comprehensive Full-Stack CRUD application with Spring Boot REST API backend and interactive frontend dashboard for managing Users and Products. Features include Redis caching with cache invalidation, Swagger API documentation, Spring Security, real-time UI updates, and Prometheus monitoring.
 
@@ -104,8 +104,8 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/ajayavula682/SimpleCurdApp.git
-   cd SimpleCurdApp
+  git clone https://github.com/ajayavula682/test-jsp-ecom-platform.git
+  cd test-jsp-ecom-platform
    ```
 
 2. **Set up MySQL Database**
@@ -214,10 +214,10 @@ java -jar target/app.jar
 ./mvnw clean package -DskipTests
 
 # Build Docker image
-docker build -t simplecurdapp:latest .
+docker build -t test-jsp-ecom-platform:latest .
 
 # Run the container
-docker run -p 8082:8082 simplecurdapp:latest
+docker run -p 8082:8082 test-jsp-ecom-platform:latest
 ```
 
 ### Option 5: Using Docker Compose
@@ -430,7 +430,7 @@ The application includes a Dockerfile for containerization.
 ### Build Docker Image
 ```bash
 ./mvnw clean package -DskipTests
-docker build -t simplecurdapp:latest .
+docker build -t test-jsp-ecom-platform:latest .
 ```
 
 ### Run Container
@@ -440,7 +440,7 @@ docker run -p 8082:8082 \
   -e SPRING_DATASOURCE_USERNAME=root \
   -e SPRING_DATASOURCE_PASSWORD=your_password \
   -e SPRING_DATA_REDIS_HOST=host.docker.internal \
-  simplecurdapp:latest
+  test-jsp-ecom-platform:latest
 ```
 
 ### Using Docker Compose
@@ -492,7 +492,7 @@ Response:
 ## 📁 Project Structure
 
 ```
-SimpleCurdApp/
+test-jsp-ecom-platform/
 ├── frontend/                       # Frontend Dashboard
 │   ├── index.html                 # Main HTML page with tabbed interface
 │   ├── app.js                     # JavaScript for API calls and UI logic
@@ -500,7 +500,7 @@ SimpleCurdApp/
 │   └── README.html                # Frontend documentation
 ├── src/
 │   ├── main/
-│   │   ├── java/com/example/simplecurdapp/
+│   │   ├── java/com/example/testjspecomplatform/
 │   │   │   ├── config/            # Configuration classes
 │   │   │   │   ├── RedisConfig.java          # Redis caching configuration
 │   │   │   │   ├── SecurityConfig.java       # Spring Security setup
@@ -523,14 +523,14 @@ SimpleCurdApp/
 │   │   │   │   ├── ResourceNotFoundException.java # 404 errors
 │   │   │   │   ├── DuplicateResourceException.java # 409 errors
 │   │   │   │   └── ErrorResponse.java            # Error response DTO
-│   │   │   └── SimpleCurdAppApplication.java     # Main Spring Boot class
+│   │   │   └── TestJspEcomPlatformApplication.java     # Main Spring Boot class
 │   │   └── resources/
 │   │       ├── application.properties        # Application configuration
 │   │       ├── static/                       # Static resources directory
 │   │       └── templates/                    # Templates directory
 │   └── test/
-│       └── java/com/example/simplecurdapp/
-│           └── SimpleCurdAppApplicationTests.java    # Unit tests
+│       └── java/com/example/testjspecomplatform/
+│           └── TestJspEcomPlatformApplicationTests.java    # Unit tests
 ├── target/                        # Build output (generated)
 │   └── app.jar                    # Executable JAR file
 ├── Dockerfile                     # Docker configuration
@@ -611,8 +611,8 @@ Use Swagger UI for interactive testing:
 ### For Backend Development
 ```bash
 # 1. Clone the repository
-git clone https://github.com/ajayavula682/SimpleCurdApp.git
-cd SimpleCurdApp
+git clone https://github.com/ajayavula682/test-jsp-ecom-platform.git
+cd test-jsp-ecom-platform
 
 # 2. Set up MySQL database
 mysql -u root -p -e "CREATE DATABASE BankDb;"

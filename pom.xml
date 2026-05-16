@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>SimpleCurdApp</artifactId>
+    <artifactId>test-jsp-ecom-platform</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SimpleCurdAppmvn clean compile</name>
-    <description>SimpleCurdApp</description>
+    <name>test-jsp-ecom platform</name>
+    <description>test-jsp-ecom platform</description>
     <url/>
     <licenses>
         <license/>
@@ -83,17 +83,25 @@
                     <artifactId>micrometer-registry-prometheus</artifactId>
                 </dependency>
 
-                <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
-                <dependency>
+                <!-- Redis dependency disabled -->
+                <!-- <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-data-redis</artifactId>
-                </dependency>
+                </dependency> -->
 
                 <!-- Swagger/OpenAPI Documentation -->
                 <dependency>
                     <groupId>org.springdoc</groupId>
                     <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                     <version>2.3.0</version>
+                </dependency>
+
+                <!-- Karate API Testing -->
+                <dependency>
+                    <groupId>com.intuit.karate</groupId>
+                    <artifactId>karate-junit5</artifactId>
+                    <version>1.4.1</version>
+                    <scope>test</scope>
                 </dependency>
         </dependencies>
 

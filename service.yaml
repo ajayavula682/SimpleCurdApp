@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: simplecurdapp-service
+  name: test-jsp-ecom-platform-service
 spec:
   type: LoadBalancer
   selector:
-    app: simplecurdapp
+    app: test-jsp-ecom-platform
   ports:
     - protocol: TCP
       port: 8088
